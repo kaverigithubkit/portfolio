@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Kaveri Gholrakhe — .NET and SQL Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060607;
+            --panel: #0f1316;
+            --muted: #9aa7b3;
+            --accent: #00d9ff;
+            --accent-2: #6b4cff;
+            --glass: rgba(255,255,255,0.02);
+            --card-shadow: 0 10px 30px rgba(2,6,23,0.7);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+            background: linear-gradient(180deg, #040506 0%, var(--bg) 100%);
+            color: #e8f0f6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            z-index: 60;
+            background: linear-gradient(180deg, rgba(6,8,10,0.6), rgba(6,8,10,0.35));
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            color: var(--bg);
+            background: linear-gradient(135deg,var(--accent),var(--accent-2));
+            box-shadow: 0 8px 26px rgba(107,76,255,0.12);
+            font-family: monospace;
+        }
+
+        .brand h1 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 700;
+            color: #e9fbff
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            align-items: center
+        }
+
+            .nav-links a {
+                color: var(--muted);
+                text-decoration: none;
+                font-weight: 600;
+                padding: 8px 10px;
+                border-radius: 8px;
+                font-size: 14px
+            }
+
+                .nav-links a:hover {
+                    color: #fff;
+                    background: var(--glass)
+                }
+
+        /* HEADER / HERO */
+        header.hero {
+            padding-top: 92px;
+            padding-bottom: 30px;
+        }
+
+        .hero-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 36px 20px;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 28px;
+            align-items: center
+        }
+
+        .panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+            padding: 26px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.02);
+            box-shadow: var(--card-shadow)
+        }
+
+        .intro h2 {
+            font-size: 34px;
+            margin: 0 0 8px 0;
+            line-height: 1.05
+        }
+
+            .intro h2 .accent {
+                color: var(--accent)
+            }
+
+        .intro p {
+            color: var(--muted);
+            margin: 12px 0 18px;
+            font-size: 15px
+        }
+
+        .cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            color: #04121a;
+            background: linear-gradient(90deg,var(--accent),var(--accent-2));
+            box-shadow: 0 8px 26px rgba(0,217,255,0.08)
+        }
+
+            .btn.secondary {
+                background: transparent;
+                border: 1px solid rgba(255,255,255,0.04);
+                color: var(--accent-2)
+            }
+
+        .meta {
+            padding: 22px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.02)
+        }
+
+            .meta .m-item {
+                margin-bottom: 12px
+            }
+
+        .muted {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .strong {
+            font-weight: 700;
+            color: #fff
+        }
+
+        /* animated glows */
+        .glow {
+            position: absolute;
+            filter: blur(100px);
+            opacity: 0.5;
+            pointer-events: none
+        }
+
+            .glow.a {
+                width: 360px;
+                height: 360px;
+                top: -80px;
+                left: -120px;
+                background: radial-gradient(circle,#00d9ff44,#0000)
+            }
+
+            .glow.b {
+                width: 300px;
+                height: 300px;
+                bottom: -100px;
+                right: -80px;
+                background: radial-gradient(circle,#6b4cff33,#0000)
+            }
+
+        /* Sections */
+        main {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 20px
+        }
+
+        section {
+            margin: 28px 0
+        }
+
+        h2.section {
+            font-size: 22px;
+            color: var(--accent);
+            margin-bottom: 14px
+        }
+
+        /* About */
+        .about .panel {
+            padding: 28px
+        }
+
+        .about p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.7;
+            text-align: center
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+            gap: 14px
+        }
+
+        .skill {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.03);
+            padding: 16px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all .18s
+        }
+
+            .skill strong {
+                display: block;
+                font-size: 14px;
+                margin-bottom: 6px
+            }
+
+            .skill small {
+                color: var(--muted)
+            }
+
+        /* Experience */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .exp {
+            padding: 18px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+            border-left: 4px solid rgba(0,217,255,0.10)
+        }
+
+            .exp h3 {
+                margin: 0;
+                color: #fff;
+                font-size: 16px
+            }
+
+            .exp .meta {
+                color: var(--muted);
+                font-size: 13px;
+                margin: 6px 0
+            }
+
+            .exp p {
+                color: var(--muted);
+                font-size: 14px;
+                line-height: 1.6
+            }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+            gap: 16px
+        }
+
+        .project {
+            padding: 18px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.03)
+        }
+
+            .project h4 {
+                margin: 0 0 8px;
+                color: var(--accent)
+            }
+
+            .project p {
+                color: var(--muted);
+                font-size: 14px;
+                line-height: 1.6
+            }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .contact a {
+            color: var(--accent);
+            text-decoration: none;
+            display: block;
+            margin-top: 6px
+        }
+
+        /* Footer */
+        footer {
+            padding: 28px;
+            text-align: center;
+            color: var(--muted);
+            margin-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.02)
+        }
+
+        /* Responsive */
+        @media (max-width:980px) {
+            .hero-wrap {
+                grid-template-columns: 1fr;
+                gap: 18px
+            }
+
+            .nav-links {
+                display: none
+            }
+        }
+
+        @media (max-width:520px) {
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 14px
+            }
+
+            .brand h1 {
+                font-size: 15px
+            }
+
+            .intro h2 {
+                font-size: 26px
+            }
+
+            section {
+                padding: 20px
+            }
+
+            header.hero {
+                padding-top: 82px
+            }
+        }
+
+        /* subtle entrance */
+        .reveal {
+            opacity: 0;
+            transform: translateY(8px);
+            animation: reveal .6s forwards
+        }
+
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <div class="nav">
+        <div class="nav-inner">
+            <div class="brand">
+                <div class="logo">KG</div>
+                <div>
+                    <h1>Kaveri Gholrakhe</h1>
+                    <small style="color:var(--muted)">.NET and SQL Developer</small>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a class="btn" href="Kaveri_Gholrakhe.pdf" download style="padding:8px 12px;font-size:13px">Download Resume</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <header class="hero" role="banner">
+        <div class="glow a"></div>
+        <div class="glow b"></div>
+
+        <div class="hero-wrap reveal">
+            <div class="intro panel">
+                <h2>Hi, I'm <span class="accent">Kaveri Gholrakhe</span></h2>
+                <p>I am a professional <strong>.NET and SQL Developer</strong> focused on building robust backend systems, optimizing database performance, and delivering reliable APIs using C#, ASP.NET, and SQL Server.</p>
+                <div class="cta">
+                    <a class="btn" href="#projects">View Projects</a>
+                    <a class="btn secondary" href="#contact">Contact</a>
+                </div>
+            </div>
+
+            <aside class="meta reveal" style="animation-delay:0.05s">
+                <div class="m-item"><div class="muted">Primary</div><div class="strong">.NET and SQL Developer</div></div>
+                <div class="m-item"><div class="muted">Location</div><div class="strong">Kolhapur, Maharashtra, India</div></div>
+                <div style="height:8px"></div>
+                <div style="font-size:13px;color:var(--muted)">Available for full-time roles • Resume ready</div>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ABOUT -->
+        <section id="about" class="reveal">
+            <div class="panel about">
+                <h2 class="section">About</h2>
+                <p>I'm a practical .NET and SQL developer (working since Feb 2025). I build backend features using C#, ASP.NET (.NET Core), and SQL Server — focusing on clean architecture, secure API endpoints, and optimized database queries for enterprise applications.</p>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="reveal">
+            <div class="panel">
+                <h2 class="section">Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill"><strong>.NET / C#</strong><small>ASP.NET, .NET Core</small></div>
+                    <div class="skill"><strong>SQL Server</strong><small>T-SQL, Stored Procedures</small></div>
+                    <div class="skill"><strong>APIs</strong><small>REST, Web API, JSON</small></div>
+                    <div class="skill"><strong>ORM</strong><small>Entity Framework, LINQ</small></div>
+                    <div class="skill"><strong>Tools</strong><small>Visual Studio, SSMS, Git,MySql,PostgreSql,Vscode</small></div>
+                    <div class="skill"><strong>Frontend</strong><small>HTML, CSS </small></div>
+                    <div class="skill"><strong>Data Visualizations</strong><small>PowerBI,Tableau </small></div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience" class="reveal">
+            <div class="panel">
+                <h2 class="section">Experience</h2>
+                <div class="exp-list">
+                    <div class="exp">
+                        <h3>.NET & SQL Developer — R N Softwares, Kolhapur</h3>
+                        <div class="meta">Feb 2025 — Present</div>
+                        <p>Building backend modules and database solutions for enterprise systems. Responsibilities include implementing REST APIs, designing normalized schemas, optimizing queries and stored procedures, and integrating UI components with server endpoints for robust features and data synchronization.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="reveal">
+            <div class="panel">
+                <h2 class="section">Projects</h2>
+                <div class="projects-grid">
+
+                    <article class="project">
+                        <h4>SAR Image Colorization</h4>
+                        <p>Built the frontend interface to upload and preview SAR images, integrated with trained model API endpoints for real-time colorization results. Managed UI flow and API consumption. (Role: Frontend & API Integrator)</p>
+                    </article>
+
+                    <article class="project">
+                        <h4>Crime Prediction & Analysis</h4>
+                        <p>Developed the dashboard UI and connected it to backend APIs to visualize crime dataset trends and predictive reports. Focused on data fetching, presentation, and responsive UI. (Role: Frontend & API Integrator)</p>
+                    </article>
+
+                    <article class="project">
+                        <h4>Hotel ERP Chatbot</h4>
+                        <p>Implemented the chatbot UI for a Hotel ERP and integrated it with backend services (SQL Server + FastAPI/.NET endpoints) to fetch bookings, room status, and billing information. Designed conversational flows and ensured secure access to data.</p>
+                    </article>
+
+                    <article class="project">
+                        <h4>AI Smart Dashboard</h4>
+                        <p>Built an admin dashboard frontend that consumes analytics and model outputs via APIs, displays interactive charts and filters, and enables report export. Focused on reliable API integrations and handling large datasets efficiently.</p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="reveal">
+            <div class="panel">
+                <h2 class="section">Contact</h2>
+                <div class="contact-grid">
+                    <div>
+                        <div class="muted">Email</div>
+                        <a href="mailto:gholrakhakaveri@gmail.com">gholrakhakaveri@gmail.com</a>
+
+                        <div style="height:12px"></div>
+                        <div class="muted">LinkedIn</div>
+                        <a href="https://www.linkedin.com/in/kaveri-gholrakhe-4639ba315/" target="_blank">linkedin.com/in/kaveri-gholrakhe-4639ba315</a>
+                    </div>
+
+                    <div>
+                        <div class="muted">GitHub</div>
+                        <a href="https://github.com/kaverigithubkit" target="_blank">github.com/kaverigithubkit</a>
+
+                        <div style="height:12px"></div>
+                        <div class="muted">Resume</div>
+                        <a class="btn" href="Kaveri_Gholrakhe_Resume.pdf" download>Download Resume</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        © 2025 Kaveri Gholrakhe — .NET and SQL Developer
+    </footer>
+
+    <script>
+        // scroll reveal
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'reveal .6s ease forwards';
+                    }
+                });
+            }, { threshold: 0.06 });
+            reveals.forEach(r => { r.style.opacity = 0; r.style.transform = 'translateY(8px)'; obs.observe(r); });
+        });
+
+        // small typing accent (rotating subtle label)
+        const roles = ['.NET and SQL Developer'];
+        let i = 0, j = 0;
+        const title = document.querySelector('.intro h2');
+        const span = document.createElement('span');
+        span.style.marginLeft = '8px';
+        span.style.color = 'var(--accent)';
+        title.appendChild(span);
+        function type() {
+            const text = roles[0]; // single tagline
+            if (j <= text.length) { span.textContent = text.slice(0, j++); }
+            else { j = 0; setTimeout(() => { }, 1200); }
+        }
+        setInterval(type, 120);
+    </script>
+</body>
+</html>
